@@ -1,20 +1,20 @@
 ---
 substitutions:
   # Dashes are not supported in devicename
-  devicename: 'lilygo_higrow_plant_sensor'
-  device_description: 'Keep my plants safe and lively'
+  devicename: 'plante1'
+  device_description: 'Gardez mes plantes en sécurité et vivantes'
   project_version: '1.0'
-  update_interval: 30min
+  update_interval: 180min
   loglevel: DEBUG
-  moisture_min: '2.82'
-  moisture_max: '1.39'
+  moisture_min: '2.83'
+  moisture_max: '1.26'
   conductivity_min: '0.075'
-  conductivity_max: '0.25'
+  conductivity_max: '0.253'
   # Uncomment run_duration and sleep_duration if you want to use deepsleep
   # set how long to stay awake - NOT less then 10sec
-  # run_duration: 11s
-  # set how long to sleep in minutes
-  # sleep_duration: 60min
+  run_duration: 11s
+  # set how long to sleep in minutesa
+  sleep_duration: 179min
 
 esphome:
   name: '${devicename}'
@@ -25,13 +25,13 @@ esphome:
       - wait_until:
           condition:
             wifi.connected:
-          timeout: 10s
+          timeout: 5s
   on_shutdown:
     then:
       - switch.turn_off: spower
 
-dashboard_import:
-  package_import_url: github://bruvv/LILYGO-T-Higrow-Esphome/LILYGO-T-Higrow-ESP32.yaml@main
+#dashboard_import:
+ # package_import_url: github://bruvv/LILYGO-T-Higrow-Esphome/LILYGO-T-Higrow-ESP32.yaml@main
 
 esp32:
   board: lolin_d32
@@ -40,8 +40,8 @@ improv_serial:
 
 wifi:
   # Use improv (after installing either go to web.esphome.io or use the installer here: https://bruvv.github.io/LILYGO-T-Higrow-Esphome)
-  # ssid: !secret wifi_ssid
-  # password: !secret wifi_password
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
   # fast_connect: True
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
@@ -102,9 +102,9 @@ packages:
   text_sensors: !include common/text_sensors.yaml
   dht: !include common/dht.yaml
   plantsensors: !include common/plantsensors.yaml
-  waterpump: !include common/waterpump.yaml
-  bluetooth: !include common/bluetooth.yaml
+  # waterpump: !include common/waterpump.yaml
+  # bluetooth: !include common/bluetooth.yaml
   # Battery only works for 12 hours with deepsleep!
   # bme280: !include common/bme280.yaml
-  # deepsleep: !include common/deepsleep.yaml
-  # battery: !include common/battery.yaml
+  deepsleep: !include common/deepsleep.yaml
+  battery: !include common/battery.yaml
